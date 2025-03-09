@@ -43,11 +43,11 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: $${ env.artifact_name }}
-        path: ${{ env.coverage_path }}
+        path: ./coverage.lcov
     - name: Report code coverage
       uses: zgosalvez/github-actions-report-lcov@v4
       with:
-        coverage-files: ${{ env.coverage_path }}
+        coverage-files: coverage.lcov
         artifact-name: code-coverage-report
         github-token: ${{ secrets.GITHUB_TOKEN }}
         update-comment: true
