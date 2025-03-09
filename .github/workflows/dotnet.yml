@@ -18,16 +18,32 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
+
+    - name: Generate build version
+      uses: einaregilsson/build-number@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
     - name: Restore dependencies
       run: dotnet restore
+      
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore p:Version=$BUILD_NUMBER
+      
     - name: Test
       run: dotnet test --no-build --verbosity normal /p:AltCover=true /p:AltCoverCobertura=./coverage.xml /p:AltCoverAssemblyExcludeFilter="Moq|Microsoft|ZetaScheduler.Testing|Altcover|testhost|AltCover"
     - uses: actions/upload-artifact@v4
       with:
         name: drop
         path: ${{ env.coverage_path }}
+        
+    - name: Create package
+      # if: startsWith(github.ref, 'refs/heads/master')
+      run: dotnet pack --configuration Release
+      
+    - name: Publish package
+      # if: startsWith(github.ref, 'refs/heads/master')
+      run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{ secrets.NUGET_API_KEY }}
 
   coverage_report:
     name: coverage
@@ -36,11 +52,13 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+      
     - name: Get coverage report
       uses: actions/download-artifact@v4
       with:
         name: drop
         path: ${{ env.coverage_path }}
+        
     - name: Publish coverage results
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
