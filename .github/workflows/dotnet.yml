@@ -38,11 +38,11 @@ jobs:
         path: ${{ env.coverage_path }}
         
     - name: Create package
-      # if: startsWith(github.ref, 'refs/heads/master')
+      if: startsWith(github.ref, 'refs/heads/master')
       run: dotnet pack --configuration Release
       
     - name: Publish package
-      # if: startsWith(github.ref, 'refs/heads/master')
+      if: startsWith(github.ref, 'refs/heads/master')
       run: dotnet nuget push **\*.nupkg --source 'https://api.nuget.org/v3/index.json' --api-key ${{ secrets.NUGET_API_KEY }}
 
   coverage_report:
