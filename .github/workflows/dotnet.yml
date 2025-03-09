@@ -7,7 +7,7 @@ on:
     branches: [ "master" ]
 
 env:
-  coverage_path: ./Modules/ZetaScheduler.Testing/coverage.lcov
+  coverage_path: Modules/ZetaScheduler.Testing/coverage.lcov
 
 jobs:
   build:
@@ -44,7 +44,7 @@ jobs:
     - name: View file tree
       run: tree -d ./
     - name: Report code coverage
-      uses: romeovs/lcov-reporter-action@v0.2.16
+      uses: boris-amenitiz/lcov-pull-request-report@v1.0.0
       with:
         lcov-file: ${{ env.coverage_path }}
-    
+        github-token: ${{ secrets.GITHUB_TOKEN }}
