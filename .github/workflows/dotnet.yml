@@ -31,24 +31,19 @@ jobs:
         path: ${{ env.coverage_path }}
 
   coverage_report:
-    name: Generate coverage report
+    name: coverage
     needs: build
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-    - name: Setup LCOV
-      uses: hrishikesh-kadam/setup-lcov@v1
     - name: Get coverage report
       uses: actions/download-artifact@v4
       with:
         name: $${ env.artifact_name }}
         path: ./coverage.lcov
     - name: Report code coverage
-      uses: zgosalvez/github-actions-report-lcov@v4
+      uses: romeovs/lcov-reporter-action@v0.2.16
       with:
-        coverage-files: coverage.lcov
-        artifact-name: code-coverage-report
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        update-comment: true
+        lcov-file: ./coverage.lcov
     
