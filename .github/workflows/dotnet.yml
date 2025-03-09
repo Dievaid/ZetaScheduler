@@ -23,7 +23,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal /p:AltCover=true /p:AltCoverCobertura=./coverage.xml /p:AltCoverAssemblyExcludeFilter=Moq|Microsoft|ZetaScheduler.Testing|Altcover|testhost
+      run: dotnet test --no-build --verbosity normal /p:AltCover=true /p:AltCoverCobertura=./coverage.xml /p:AltCoverAssemblyExcludeFilter="Moq|Microsoft|ZetaScheduler.Testing|Altcover|testhost"
     - uses: actions/upload-artifact@v4
       with:
         name: drop
