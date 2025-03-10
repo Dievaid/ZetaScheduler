@@ -2,7 +2,7 @@
 
 namespace ZetaScheduler.Events
 {
-    internal class RecurringTaskFinishedEventArgs : EventArgs
+    internal class RecurringActionFinishedEventArgs : EventArgs
     {
         public Action Task { get; set; }
 
