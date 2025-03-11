@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ZetaScheduler.Testing
 {
     [TestClass]
-    public class SchedulerTest
+    public class JobSchedulerTest
     {
         private Mock<IJob> jobMock;
 
